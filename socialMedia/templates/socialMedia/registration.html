@@ -1,0 +1,124 @@
+{% extends 'basic.html'%}
+
+{% block body%}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Create Your Account</h1>
+        <p class="lead">Fill all the details to start journey of Fitness</p>
+    </div>
+</div>
+<div class="container my-4">
+    <form action="/shop/registration/" method="POST">{% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="dob">DOB</label>
+                <input type="date" class="form-control" id="dob" name="dob" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" class="form-control" required>
+                    <option selected>-</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="number">Mobile Number</label>
+                <input type="tel" class="form-control" id="number" name="number" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-12 p-0">
+                <label for="level">Fitness Level</label>
+                <select id="level" name="level" class="form-control" required>
+                    <option selected>Beginner</option>
+                    <option>Intermidiate</option>
+                    <option>Advanced</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="height">Height</label>
+                <input type="text" class="form-control" id="height" name="height" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="weight">weight</label>
+                <input type="text" class="form-control" id="weight" name="weight" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="age">Age</label>
+                <input type="text" class="form-control" id="age" name="age" required>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="bmi">BMI</label>
+                <input class="form-control" id="bmi" name="bmi" onclick="bmiCalculator()">
+                <small class="form-text text-muted">PLease click on input field to calculate BMI</small>
+            </div>
+            <div class="form-group col-md-6 p-0">
+                <label for="fat">Fat Percentage</label>
+                <input class="form-control" id="fat" name="fat" onclick="fatCalculator()">
+                <small class="form-text text-muted">PLease click on input field to calculate Fat Percentage</small>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+
+    function bmiCalculator() {
+        let height = document.getElementById('height').value;
+        let weight = document.getElementById('weight').value;
+        height = parseInt(height);
+        weight = parseInt(weight);
+        if (height && weight) {
+            let bmi = (weight / (height * height)) * 10000;
+            bmi = parseFloat(bmi).toPrecision(4);
+            document.getElementById('bmi').value = bmi;
+        }
+        else {
+            alert("Please Enter All values first");
+        }
+    }
+
+    function fatCalculator() {
+        let bmi = document.getElementById('bmi').value;
+        let gender = document.getElementById('gender').value;
+        let age = parseInt(document.getElementById('age').value);
+        if (bmi && gender && age) {
+            if (gender == 'Female') {
+                console.log(gender);
+                let fat = (1.20 * bmi) + (0.23 * age) - 5.4
+                fat = parseFloat(fat);
+                document.getElementById('fat').value = fat;
+            } else {
+                console.log(gender);
+                let fat = (1.20 * bmi) + (0.23 * age) - 16.2
+                fat = parseFloat(fat).toPrecision(4);
+                document.getElementById('fat').value = fat;
+            }
+        }
+        else {
+            alert("Please Enter All values first");
+        }
+    }
+
+</script>
+{% endblock %}
