@@ -11,8 +11,9 @@ class Registration(models.Model):
     fitness_level = models.CharField(max_length=10)
     height = models.IntegerField(default=0)
     weight = models.IntegerField(default=0)
+    age = models.IntegerField(default=0)
     bmi = models.CharField(max_length=10)
     fat_per = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.product_name
+        return self.name
